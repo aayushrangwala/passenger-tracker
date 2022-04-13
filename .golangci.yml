@@ -1,0 +1,75 @@
+# https://github.com/golangci/golangci-lint#config-file
+
+linters:
+  # please, do not use `enable-all`: it's deprecated and will be removed soon.
+  # inverted configuration with `enable-all` and `disable` is not scalable during updates of golangci-lint
+  disable-all: true
+  enable:
+    - bodyclose
+    - deadcode
+    - depguard
+    - dupl
+    - errcheck
+    - funlen
+#    - gochecknoinits
+#    - gochecknoglobals
+    - goconst
+    - gocritic
+    - gocyclo
+    - gofmt
+    - goimports
+    - gosec
+    - gosimple
+    - govet
+    - ineffassign
+    - misspell
+    - nakedret
+    - staticcheck
+    - structcheck
+    - stylecheck
+    - typecheck
+    - unconvert
+    - unparam
+    - unused
+    - varcheck
+
+#   don't enable:
+#   - asciicheck
+#   - godot
+#   - godox
+#   - goerr113
+#   - maligned
+#   - nestif
+#   - prealloc
+#   - testpackage
+#   - revive
+#   - lll
+#   - interfacer
+#   - gomnd
+#   - gofumpt
+#   - exhaustive
+#   - nlreturn
+#   - noctx
+#   - nolintlint
+#   - wsl
+
+run:
+  # include test files or not, default is true
+  tests: true
+  deadline: 5m
+
+linters-settings:
+  funlen:
+    lines: 60
+    statements: 40
+  gocognit:
+    min-complexity: 40
+  gci:
+    local-prefixes: passenger-tacker
+
+issues:
+  exclude-rules:
+    - path: _test\.go
+      linters:
+        - funlen
+        - gochecknoglobals

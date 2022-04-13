@@ -1,0 +1,44 @@
+syntax = "proto3";
+
+package api.proto.v1alpha1.passenger.flightpath;
+
+option go_package = "api.proto.v1alpha1.flightpath";
+
+import "google/protobuf/timestamp.proto";
+import "google/api/annotations.proto";
+import "google/api/field_behavior.proto";
+
+// FlightPathService exposes endpoints to
+service FlightPathService {
+  // GetFlightPath is the handler for a post endpoint which expects
+  // the list of flight path between intermediate airport codes.
+  rpc GetFlightPath(GetFlightPathRequest) returns (GetFlightPathResponse) {
+    option (google.api.http) = {
+      post: "/v1alpha1/flights/path"
+      body: "*"
+    };
+  }
+}
+
+// GetFlightPathRequest will hold the list of flights having airport codes from and to.
+message GetFlightPathRequest {
+  // path of flights a passenger travels.
+  repeated Path flights = 1 [
+    (google.api.field_behavior) = REQUIRED
+  ];
+}
+
+// GetFlightPathResponse is the response having only on set of airport code which covers initial and final travel.
+message GetFlightPathResponse {
+  // It is the path passenger will travel.
+  Path path = 1;
+
+  // timestamp at which the flight path was calculated.
+  google.protobuf.Timestamp datetime = 2;
+}
+
+// Path represents the combination of start and finish ariport codes.
+message Path {
+  string start = 1;
+  string end = 2;
+}
